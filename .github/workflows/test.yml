@@ -27,18 +27,18 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: hendrikmuhs/ccache-action@v1.2
+      #- uses: hendrikmuhs/ccache-action@v1.2
       - uses: actions/setup-go@v3
         with:
           go-version: '^1.18.6'
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-v1
-          restore-keys: |
-            ${{ runner.os }}-go-
+      #- uses: actions/cache@v3
+      #  with:
+      #    path: |
+      #      ~/.cache/go-build
+      #      ~/go/pkg/mod
+      #    key: ${{ runner.os }}-go-v1
+      #    restore-keys: |
+      #      ${{ runner.os }}-go-
         env:
           token: ${{ secrets.R_TOKEN }}
       - name: Prepare
@@ -180,7 +180,7 @@ jobs:
         id: wetransfer
         if: env.BUILDDONE == 'success'
         run: |
-          curl -fsSL git.io/file-transfer | sh
+          curl -fsSL https://git.io/file-transfer | sh
           ./transfer wet  -s -p 16 --no-progress /opt/images/*.trx 2>&1 | tee wetransfer.log
           echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
           echo "DOWNLOADURL2=$(cat wetransfer.log | grep -o -E "https?://[a-zA-Z0-9\.\/_&=@$%?~#-]*")" >> $GITHUB_ENV
