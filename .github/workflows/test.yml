@@ -63,6 +63,8 @@ jobs:
           sed -i "s#https://cdn.jsdelivr.net/gh/chongshengB/rt-n56u/trunk/user/adguardhome/AdGuardHome#https://cdn.jsdelivr.net/gh/Yh793/Padavan-build/adg/AdGuardHome#g" ./adguardhome.sh
           cd /opt/rt-n56u/trunk/tools
           awk '{if(NR>=34&&NR<=40)$0="#"$0}1' ./Makefile
+          cd /opt/rt-n56u/trunk/user/rc
+          awk '{if(NR=346)$0="//"$0}1' ./services_ex.c
       - name: Get current time
         uses: josStorer/get-current-time@v2.0.2
         id: current-time
